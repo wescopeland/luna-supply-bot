@@ -9,8 +9,7 @@
       "options": {
         "outputPath": "dist/apps/bot",
         "main": "apps/bot/src/main.ts",
-        "tsConfig": "apps/bot/tsconfig.app.json",
-        "assets": ["apps/bot/src/assets"]
+        "tsConfig": "apps/bot/tsconfig.app.json"
       },
       "configurations": {
         "production": {

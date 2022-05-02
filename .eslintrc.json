@@ -1,7 +1,19 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx"],
+
+  "plugins": ["@nrwl/nx", "simple-import-sort", "import"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:sonarjs/recommended",
+    "plugin:unicorn/recommended",
+    "plugin:security/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier"
+  ],
+
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -18,7 +30,72 @@
               }
             ]
           }
-        ]
+        ],
+
+        "curly": "error",
+        "no-console": "off",
+        "object-shorthand": "error",
+        "one-var": ["error", "never"],
+        "eqeqeq": "error",
+
+        "@typescript-eslint/consistent-type-imports": "error",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-var-requires": "off",
+
+        "import/first": "error",
+        "import/newline-after-import": "error",
+        "import/no-duplicates": "error",
+
+        "jsx-a11y/anchor-is-valid": "off",
+
+        "react/display-name": "off",
+        "react/no-unescaped-entities": "off",
+        "react/prop-types": "off",
+        "react/react-in-jsx-scope": "off",
+
+        "security/detect-object-injection": "off",
+
+        "simple-import-sort/exports": "error",
+        "simple-import-sort/imports": [
+          "error",
+          {
+            "groups": [
+              // Side effect imports.
+              ["^\\u0000"],
+
+              // Packages.
+              // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+              ["^@?\\w"],
+
+              // Internal packages.
+              ["^(@luna-supply)(/.*|$)"],
+
+              // Absolute imports and other imports such as Vue-style `@/foo`.
+              // Anything not matched in another group.
+              ["^"],
+
+              // Relative imports.
+              // Anything that starts with a dot.
+              ["^\\."]
+            ]
+          }
+        ],
+
+        "sonarjs/no-unused-collection": "off",
+
+        "unicorn/filename-case": "off",
+        "unicorn/no-array-callback-reference": "off",
+        "unicorn/no-array-for-each": "warn",
+        "unicorn/no-array-reduce": "off",
+        "unicorn/no-empty-file": "off",
+        "unicorn/no-null": "off",
+        "unicorn/prefer-module": "off",
+        "unicorn/prefer-node-protocol": "off",
+        "unicorn/prefer-spread": "off",
+        "unicorn/prefer-switch": "off",
+        "unicorn/prevent-abbreviations": "off"
       }
     },
     {
