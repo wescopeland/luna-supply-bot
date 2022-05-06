@@ -58,11 +58,22 @@ export class SupplyMonitorService {
     this.#logger.log(
       `💾 Saving new circulating supply and total supply to entry ID ${latestSupplyMeasurement.id}.`
     );
-    await this.database.dailySupply.upsert({
-      where: { id: latestSupplyMeasurement.id },
-      update: { circulatingSupply, totalSupply },
-      create: { circulatingSupply, totalSupply, date: fullLunaSupply[0].date }
+    const foundTodaySupply = await this.database.dailySupply.findFirst({
+      where: { date: fullLunaSupply[0].date }
     });
+
+    // eslint-disable-next-line unicorn/prefer-ternary
+    if (foundTodaySupply) {
+      await this.database.dailySupply.update({
+        where: { id: foundTodaySupply.id },
+        data: { circulatingSupply, totalSupply }
+      });
+    } else {
+      await this.database.dailySupply.create({
+        data: { circulatingSupply, totalSupply, date: fullLunaSupply[0].date }
+      });
+    }
+
     this.#logger.log(
       "✅ Successfully saved the current circulating supply and total supply."
     );
